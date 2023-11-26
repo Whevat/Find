@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttackingU : MonoBehaviour
+{
+    public AttackingCtrl aC;
+
+    public SpriteRenderer sR;
+
+    bool attacking = false;
+
+    private void Start() 
+    {
+        sR = GetComponent<SpriteRenderer>();    
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.U))
+        {
+            if (Input.GetKeyDown(KeyCode.L) && aC.canAttack)
+            {
+                StartCoroutine(attack(aC.attackingDelay));
+            }    
+            if (attacking)
+            {
+                sR.color = aC.Active;
+            }
+            else
+            {
+                sR.color = aC.Dormant;
+            }
+        }
+    }
+
+    IEnumerator attack (float wait)
+    {
+        attacking = true;
+        aC.canAttack = false;
+        
+        yield return new WaitForSeconds(wait);
+
+        attacking = false;
+        aC.canAttack = true;
+    }
+}
