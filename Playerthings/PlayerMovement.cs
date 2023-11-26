@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
     public GroundCheck gC;
 
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    private float speed = 6f;
+    private float jumpingPower = 8f;
     float buttonTime = .3f;
     float jumpTime;
     bool jumping;
@@ -29,10 +29,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (jumping)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpAmount);
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             jumpTime += Time.deltaTime;
         }
-        if(Input.GetKeyUp(KeyCode.Space) | jumpTime > buttonTime)
+        if(Input.GetKeyUp(KeyCode.Space) || jumpTime > buttonTime)
         {
             jumping = false;
         }
