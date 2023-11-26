@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+// Vertical Movement (Jumping)
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -30,11 +30,14 @@ public class PlayerMovement : MonoBehaviour
         Flip();
     }
 
+// Horizontal Movement
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);  
     }
   
+
+// Flips the player's sprite when you move the other direction
     private void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
