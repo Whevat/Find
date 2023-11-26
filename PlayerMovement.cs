@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 16f;
+    float buttonTime = .3f;
+    float jumpTime;
+    bool jumping;
     private bool isFacingRight = true;
 
     [SerializeField] private Rigidbody2D rb;
@@ -21,12 +24,18 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         if (Input.GetKeyDown(KeyCode.Space) && gC.IsGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y *0.5f);
-        }
+            jumping = true;
+            jumpTime = 0;
+        }
+        if (jumping)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpAmount);
+            jumpTime += Time.deltaTime;
+        }
+        if(Input.GetKeyUp(KeyCode.Space) | jumpTime > buttonTime)
+        {
+            jumping = false;
+        }
         Flip();
     }
 
